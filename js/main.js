@@ -19,7 +19,48 @@ if (navbar) {
   });
 }
 
-// ========== SLIDESHOW SYSTEM ==========
+// ========== GALLERY PREVIEW SYSTEM ==========
+// "Show All" buttons - reveal the full gallery grid
+document.querySelectorAll('.show-all-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.getAttribute('data-target');
+    const fullGallery = document.getElementById(targetId);
+    if (fullGallery) {
+      fullGallery.style.display = 'block';
+      btn.style.display = 'none';
+      // Scroll to the gallery smoothly
+      fullGallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Click on any preview-card or gallery-thumb to open fullscreen plan viewer
+document.querySelectorAll('.preview-card, .gallery-thumb').forEach(card => {
+  card.addEventListener('click', () => {
+    const img = card.querySelector('img');
+    if (img && planViewer) {
+      planViewerImg.src = img.src;
+      planViewerImg.alt = img.alt || '';
+      planViewerTitle.textContent = img.alt || 'Planimetri';
+      planViewerInfo.innerHTML = '';
+      planViewer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      planViewerImg.classList.remove('zoomed');
+
+      // Set up navigation through all visible images
+      const section = card.closest('.gallery-preview');
+      if (section) {
+        const allCards = Array.from(section.querySelectorAll('.preview-card, .gallery-thumb'));
+        const allImgs = allCards.map(c => c.querySelector('img')).filter(Boolean);
+        currentPlanImages = allImgs.map(i => ({ src: i.src, alt: i.alt }));
+        currentPlanIndex = allImgs.findIndex(i => i.src === img.src);
+        updatePlanNav();
+      }
+    }
+  });
+});
+
+// ========== SLIDESHOW SYSTEM (kept for backward compat) ==========
 function initSlideshow(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -30,8 +71,6 @@ function initSlideshow(containerId) {
   const counterEl = container.querySelector('.slideshow-current');
   const infoName = container.querySelector('.slideshow-name');
   const infoLoc = container.querySelector('.slideshow-location');
-  const infoNeto = container.querySelector('.slideshow-neto');
-  const infoTotale = container.querySelector('.slideshow-totale');
   const track = container.querySelector('.slideshow-track');
   let current = 0;
 
@@ -40,12 +79,9 @@ function initSlideshow(containerId) {
     slides[idx].classList.add('active');
     current = idx;
     if (counterEl) counterEl.textContent = idx + 1;
-
     const slide = slides[idx];
     if (infoName) infoName.textContent = slide.dataset.name || '';
     if (infoLoc) infoLoc.textContent = slide.dataset.location || '';
-    if (infoNeto) infoNeto.textContent = slide.dataset.neto || '';
-    if (infoTotale) infoTotale.textContent = slide.dataset.totale || '';
   }
 
   if (prevBtn) prevBtn.addEventListener('click', () => {
@@ -55,35 +91,21 @@ function initSlideshow(containerId) {
     showSlide((current + 1) % slides.length);
   });
 
-  // Click image to open fullscreen plan viewer
   if (track) track.addEventListener('click', () => {
     const slide = slides[current];
     const img = slide.querySelector('img');
     if (img && planViewer) {
       planViewerImg.src = img.src;
       planViewerImg.alt = slide.dataset.name || '';
-      planViewerTitle.textContent = (slide.dataset.name || '') + ' \u2014 ' + (slide.dataset.location || '');
-
-      const neto = slide.dataset.neto || '';
-      const totale = slide.dataset.totale || '';
-      const badge = slide.dataset.badge || '';
-      const loc = slide.dataset.location || '';
-
-      planViewerInfo.innerHTML =
-        '<div class="pv-detail"><span class="pv-label">Tipologjia</span><span class="pv-value">' + badge + '</span></div>' +
-        '<div class="pv-detail"><span class="pv-label">Sip\u00ebrfaqja Neto</span><span class="pv-value">' + neto + '</span></div>' +
-        (totale ? '<div class="pv-detail"><span class="pv-label">Sip\u00ebrfaqja Totale</span><span class="pv-value">' + totale + '</span></div>' : '') +
-        '<div class="pv-detail"><span class="pv-label">Pozicioni</span><span class="pv-value">' + loc + '</span></div>';
-
+      planViewerTitle.textContent = (slide.dataset.name || '') + ' — ' + (slide.dataset.location || '');
+      planViewerInfo.innerHTML = '';
       planViewer.classList.add('active');
       document.body.style.overflow = 'hidden';
       planViewerImg.classList.remove('zoomed');
     }
   });
 
-  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
-    // Only if this slideshow is in viewport
     const rect = container.getBoundingClientRect();
     const inView = rect.top < window.innerHeight && rect.bottom > 0;
     if (!inView) return;
@@ -104,38 +126,50 @@ const planViewerTitle = document.getElementById('planViewerTitle');
 const planViewerInfo = document.getElementById('planViewerInfo');
 const planViewerClose = document.getElementById('planViewerClose');
 
+let currentPlanImages = [];
+let currentPlanIndex = 0;
+
+// Navigation buttons in plan viewer
+const planPrevBtn = document.getElementById('planViewerPrev');
+const planNextBtn = document.getElementById('planViewerNext');
+
+function updatePlanNav() {
+  if (planPrevBtn) planPrevBtn.style.display = currentPlanImages.length > 1 ? 'flex' : 'none';
+  if (planNextBtn) planNextBtn.style.display = currentPlanImages.length > 1 ? 'flex' : 'none';
+}
+
+function showPlanImage(idx) {
+  if (!currentPlanImages.length) return;
+  currentPlanIndex = idx;
+  planViewerImg.src = currentPlanImages[idx].src;
+  planViewerImg.alt = currentPlanImages[idx].alt;
+  planViewerTitle.textContent = currentPlanImages[idx].alt || 'Planimetri';
+  planViewerImg.classList.remove('zoomed');
+}
+
+if (planPrevBtn) {
+  planPrevBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPlanImage((currentPlanIndex - 1 + currentPlanImages.length) % currentPlanImages.length);
+  });
+}
+if (planNextBtn) {
+  planNextBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showPlanImage((currentPlanIndex + 1) % currentPlanImages.length);
+  });
+}
+
 function openPlanViewer(card) {
   if (!planViewer) return;
-
   const img = card.querySelector('.apartment-img img');
   const name = card.querySelector('.apartment-name')?.textContent || '';
   const location = card.querySelector('.apartment-location')?.textContent || '';
-  const badge = card.querySelector('.apartment-badge')?.textContent || '';
-  const neto = card.querySelector('.size-neto')?.textContent || '';
-  const totale = card.querySelector('.size-totale')?.textContent || '';
 
   planViewerImg.src = img.src;
   planViewerImg.alt = name;
   planViewerTitle.textContent = name + ' — ' + location;
-
-  planViewerInfo.innerHTML = `
-    <div class="pv-detail">
-      <span class="pv-label">Tipologjia</span>
-      <span class="pv-value">${badge}</span>
-    </div>
-    <div class="pv-detail">
-      <span class="pv-label">Sipërfaqja Neto</span>
-      <span class="pv-value">${neto}</span>
-    </div>
-    ${totale ? `<div class="pv-detail">
-      <span class="pv-label">Sipërfaqja Totale</span>
-      <span class="pv-value">${totale}</span>
-    </div>` : ''}
-    <div class="pv-detail">
-      <span class="pv-label">Pozicioni</span>
-      <span class="pv-value">${location}</span>
-    </div>
-  `;
+  planViewerInfo.innerHTML = '';
 
   planViewer.classList.add('active');
   document.body.style.overflow = 'hidden';
@@ -146,9 +180,9 @@ function closePlanViewer() {
   if (!planViewer) return;
   planViewer.classList.remove('active');
   document.body.style.overflow = '';
+  currentPlanImages = [];
 }
 
-// Zoom toggle on plan image
 if (planViewerImg) {
   planViewerImg.addEventListener('click', () => {
     planViewerImg.classList.toggle('zoomed');
@@ -159,7 +193,6 @@ if (planViewerClose) {
   planViewerClose.addEventListener('click', closePlanViewer);
 }
 
-// Click apartment cards to open plan viewer (for non-slideshow pages)
 document.querySelectorAll('.apartment-card').forEach(card => {
   card.addEventListener('click', (e) => {
     if (e.target.closest('a')) return;
@@ -167,11 +200,16 @@ document.querySelectorAll('.apartment-card').forEach(card => {
   });
 });
 
-// ESC to close plan viewer
+// ESC to close
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closePlanViewer();
     closeLightbox();
+  }
+  // Arrow keys in plan viewer
+  if (planViewer && planViewer.classList.contains('active') && currentPlanImages.length > 1) {
+    if (e.key === 'ArrowLeft') showPlanImage((currentPlanIndex - 1 + currentPlanImages.length) % currentPlanImages.length);
+    if (e.key === 'ArrowRight') showPlanImage((currentPlanIndex + 1) % currentPlanImages.length);
   }
 });
 
@@ -259,7 +297,7 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.apartment-card, .gallery-item, .render-item, .video-item, .property-card, .city-card, .stat, .slideshow').forEach(el => {
+document.querySelectorAll('.apartment-card, .gallery-item, .render-item, .video-item, .property-card, .city-card, .stat, .slideshow, .gallery-preview, .preview-card').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
