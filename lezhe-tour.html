@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tur Virtual 360° | Sergio Construction — Lezhë</title>
+  <meta name="description" content="Vizitoni ndërtesën tonë komerciale në Lezhë me tur virtual 360°. Sergio Construction SH.P.K.">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0a;
+      --gold: #c9a84c;
+      --gold-dark: #a8893d;
+      --text: #f0ece2;
+      --text-muted: #a09b8f;
+      --panel-bg: rgba(10, 10, 10, 0.92);
+      --panel-border: rgba(201, 168, 76, 0.2);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loading-logo { width: 180px; margin-bottom: 30px; opacity: 0.9; }
+    .loading-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .loading-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .loading-bar-track {
+      width: 200px; height: 2px;
+      background: rgba(201,168,76,0.15);
+      border-radius: 2px; overflow: hidden;
+    }
+    .loading-bar-fill {
+      height: 100%; width: 0%;
+      background: var(--gold);
+      animation: loadProgress 2s ease-in-out forwards;
+    }
+    @keyframes loadProgress { 0%{width:0%} 60%{width:70%} 100%{width:100%} }
+
+    /* Main Layout */
+    .tour-wrapper { display: flex; height: 100vh; width: 100vw; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 300px; min-width: 300px;
+      background: var(--panel-bg);
+      border-right: 1px solid var(--panel-border);
+      display: flex; flex-direction: column;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+    .sidebar-header {
+      padding: 16px; border-bottom: 1px solid var(--panel-border);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-logo { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; }
+    .sidebar-brand h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem; font-weight: 600; color: var(--gold);
+    }
+    .sidebar-brand p { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .sidebar-nav { flex: 1; overflow-y: auto; padding: 8px 0; }
+    .sidebar-nav::-webkit-scrollbar { width: 3px; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 3px; }
+
+    .floor-label {
+      padding: 10px 16px 4px;
+      font-size: 0.6rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--gold);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .floor-label::after { content:''; flex:1; height:1px; background: var(--panel-border); }
+    .scene-btn {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; padding: 8px 16px;
+      background: none; border: none;
+      color: var(--text-muted);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem; cursor: pointer; text-align: left;
+      transition: all 0.15s ease;
+    }
+    .scene-btn:hover { background: rgba(201,168,76,0.08); color: var(--text); }
+    .scene-btn.active { background: rgba(201,168,76,0.12); color: var(--gold); border-left: 2px solid var(--gold); }
+
+    .sidebar-footer { padding: 12px 16px; border-top: 1px solid var(--panel-border); }
+    .back-btn {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.75rem; font-weight: 500;
+      transition: color 0.2s; padding: 6px 0;
+    }
+    .back-btn:hover { color: var(--gold); }
+    .back-btn svg { width: 14px; height: 14px; }
+
+    /* Panorama Container */
+    .pano-container { flex: 1; position: relative; min-width: 0; }
+    #panorama { width: 100%; height: 100%; }
+
+    /* Top Bar */
+    .top-bar {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .top-bar > * { pointer-events: auto; }
+    .current-scene-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    .current-scene-floor {
+      font-size: 0.65rem; color: var(--gold);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-top: 2px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .top-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.4); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    .top-btn:hover { border-color: #fff; background: rgba(255,255,255,0.15); }
+    .top-btn svg { width: 16px; height: 16px; }
+
+    /* Sidebar Toggle (mobile) */
+    .sidebar-toggle {
+      display: none;
+      position: absolute; top: 14px; left: 14px; z-index: 200;
+      width: 40px; height: 40px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.6); color: #fff;
+      cursor: pointer; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    .sidebar-toggle svg { width: 18px; height: 18px; }
+
+    /* Scene Counter */
+    .scene-counter {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 50;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 24px; padding: 8px 18px;
+      font-size: 0.8rem; color: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .scene-counter .nav-arrow {
+      background: none; border: none;
+      color: rgba(255,255,255,0.6); cursor: pointer;
+      padding: 4px; display: flex; transition: color 0.2s;
+    }
+    .scene-counter .nav-arrow:hover { color: #fff; }
+    .scene-counter .nav-arrow svg { width: 16px; height: 16px; }
+
+    /* ========== WHITE FLOOR HOTSPOTS (Google Street View style) ========== */
+    .pnlm-hotspot-base { cursor: pointer !important; }
+    .pnlm-scene-hotspot { width: 0 !important; height: 0 !important; }
+    .pnlm-tooltip { display: none !important; }
+    .pnlm-about-msg { display: none !important; }
+    .pnlm-hot-spot-debug-indicator { display: none !important; }
+    .pnlm-compass { filter: brightness(0.8) sepia(0.5) hue-rotate(5deg); }
+
+    /* The white circle on the floor */
+    .floor-hotspot {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      border: 3px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4), 0 0 0 2px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+    }
+    .floor-hotspot:hover {
+      transform: scale(1.2);
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 3px rgba(255,255,255,0.3);
+    }
+    .floor-hotspot:active {
+      transform: scale(0.95);
+    }
+
+    /* Arrow inside the circle */
+    .floor-hotspot svg {
+      width: 22px;
+      height: 22px;
+      color: #333;
+      transition: color 0.2s;
+    }
+    .floor-hotspot:hover svg {
+      color: #000;
+    }
+
+    /* Pulsing ring animation */
+    .floor-hotspot::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      animation: floorPulse 2.5s ease-in-out infinite;
+    }
+
+    /* Label that appears on hover */
+    .floor-hotspot-label {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .floor-hotspot-label::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(0, 0, 0, 0.8);
+    }
+    .floor-hotspot:hover .floor-hotspot-label {
+      opacity: 1;
+    }
+
+    /* Stair hotspot variant (for going up/down floors) */
+    .floor-hotspot.stairs-up {
+      background: rgba(201, 168, 76, 0.85);
+      border-color: rgba(201, 168, 76, 0.95);
+    }
+    .floor-hotspot.stairs-up:hover {
+      background: rgba(201, 168, 76, 1);
+    }
+    .floor-hotspot.stairs-up svg { color: #fff; }
+    .floor-hotspot.stairs-up:hover svg { color: #fff; }
+    .floor-hotspot.stairs-up::before {
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+
+    @keyframes floorPulse {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 0; }
+    }
+
+    /* Pannellum overrides */
+    .pnlm-container { background: #111 !important; }
+    .pnlm-load-box { display: none !important; }
+
+    /* Fullscreen */
+    .tour-wrapper.fullscreen { position: fixed; inset: 0; z-index: 10000; }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .sidebar {
+        position: fixed; top: 0; left: 0; bottom: 0; z-index: 500;
+        transform: translateX(-100%);
+        box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+      }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-toggle { display: flex; }
+      .sidebar-overlay {
+        display: none; position: fixed; inset: 0;
+        background: rgba(0,0,0,0.5); z-index: 400;
+      }
+      .sidebar-overlay.open { display: block; }
+      .top-bar { padding-left: 62px; }
+      .floor-hotspot { width: 42px; height: 42px; }
+      .floor-hotspot svg { width: 18px; height: 18px; }
+    }
+    @media (max-width: 480px) {
+      .sidebar { width: 260px; min-width: 260px; }
+      .current-scene-label { font-size: 0.9rem; }
+      .floor-hotspot { width: 38px; height: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <img src="assets/logos/hf_20260326_001003_f88b4c29-5dec-41cb-8301-e37ae12d23cb (1).jpg" alt="Sergio Construction" class="loading-logo">
+    <div class="loading-title">Tur Virtual 360&deg;</div>
+    <div class="loading-subtitle">Lezhë &mdash; Sergio Construction</div>
+    <div class="loading-bar-track"><div class="loading-bar-fill"></div></div>
+  </div>
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="tour-wrapper" id="tourWrapper">
+
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Hap menunë">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <img src="assets/logos/hf_20260326_001003_f88b4c29-5dec-41cb-8301-e37ae12d23cb (1).jpg" alt="Sergio Construction" class="sidebar-logo">
+        <div class="sidebar-brand">
+          <h2>Tur Virtual 360&deg;</h2>
+          <p>Lezhë</p>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+      <div class="sidebar-footer">
+        <a href="lezhe.html" class="back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Kthehu tek faqja e Lezhës
+        </a>
+      </div>
+    </aside>
+
+    <div class="pano-container">
+      <div class="top-bar">
+        <div>
+          <div class="current-scene-label" id="currentSceneLabel">Hyrja Kryesore</div>
+          <div class="current-scene-floor" id="currentSceneFloor">Kati Përdhe</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="top-btn" id="btnFullscreen" title="Ekran i plotë">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="panorama"></div>
+
+      <div class="scene-counter">
+        <button class="nav-arrow" id="prevScene">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span id="sceneCounterText">1 / 30</span>
+        <button class="nav-arrow" id="nextScene">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+  <script>
+    // ── Scene Data ──
+    const scenes = [
+      // Ground Floor - Commercial (Finished)
+      { id: "s001", file: "IMG_20251223_124842_00_001.jpg", title: "Hyrja Kryesore", floor: "Kati Përdhe" },
+      { id: "s002", file: "IMG_20251223_124930_00_002.jpg", title: "Holli i Hyrjes", floor: "Kati Përdhe" },
+      { id: "s004", file: "IMG_20251223_125112_00_004.jpg", title: "Korridori me Shkallë", floor: "Kati Përdhe" },
+      { id: "s007", file: "IMG_20251223_125335_00_007.jpg", title: "Korridori me Xham", floor: "Kati Përdhe" },
+      { id: "s009", file: "IMG_20251223_125456_00_009.jpg", title: "Kryqëzimi i Korridorit", floor: "Kati Përdhe" },
+      { id: "s010", file: "IMG_20251223_125534_00_010.jpg", title: "Korridori Qendror", floor: "Kati Përdhe" },
+      { id: "s011", file: "IMG_20251223_125600_00_011.jpg", title: "Njësia Komerciale", floor: "Kati Përdhe" },
+
+      // 1st Floor Commercial
+      { id: "s013", file: "IMG_20251223_125654_00_013.jpg", title: "Dhomë Komerciale", floor: "Kati i 1-rë" },
+      { id: "s017", file: "IMG_20251223_125907_00_017.jpg", title: "Dhomë me Dritare", floor: "Kati i 1-rë" },
+      { id: "s020", file: "IMG_20251223_130103_00_020.jpg", title: "Dhomë Qoshe", floor: "Kati i 1-rë" },
+
+      // 2nd Floor Commercial
+      { id: "s028", file: "IMG_20251223_130501_00_028.jpg", title: "Hapësirë e Madhe", floor: "Kati i 2-të" },
+      { id: "s035", file: "IMG_20251223_130802_00_035.jpg", title: "Dhomë me Dritare të Madhe", floor: "Kati i 2-të" },
+      { id: "s038", file: "IMG_20251223_130918_00_038.jpg", title: "Kati me Shkallë", floor: "Kati i 2-të" },
+
+      // Exterior
+      { id: "s064", file: "IMG_20251223_132232_00_064.jpg", title: "Pamja e Jashtme", floor: "Eksterieri" },
+      { id: "s065", file: "IMG_20251223_132347_00_065.jpg", title: "Tarracë me Panoramë", floor: "Eksterieri" },
+      { id: "s075", file: "IMG_20251223_132749_00_075.jpg", title: "Oborri i Ndërtesës", floor: "Eksterieri" },
+
+      // Apartments - Corridor & Stairwell
+      { id: "s080", file: "IMG_20251223_133027_00_080.jpg", title: "Korridori Rezidencial", floor: "Apartamentet" },
+      { id: "s082", file: "IMG_20251223_133101_00_082.jpg", title: "Hyrja e Apartamentit", floor: "Apartamentet" },
+      { id: "s085", file: "IMG_20251223_133219_00_086.jpg", title: "Saloni i Madh", floor: "Apartamentet" },
+      { id: "s090", file: "IMG_20251223_133510_00_090.jpg", title: "Shkallët me Ashensor", floor: "Apartamentet" },
+      { id: "s092", file: "IMG_20251223_133600_00_092.jpg", title: "Dera e Apartamentit", floor: "Apartamentet" },
+      { id: "s095", file: "IMG_20251223_133657_00_095.jpg", title: "Apartament — Dhoma e Ndenjës", floor: "Apartamentet" },
+      { id: "s104", file: "IMG_20251223_134043_00_104.jpg", title: "Kati Rezidencial", floor: "Apartamentet" },
+      { id: "s106", file: "IMG_20251223_134111_00_106.jpg", title: "Korridori i Apartamentit", floor: "Apartamentet" },
+      { id: "s110", file: "IMG_20251223_134231_00_110.jpg", title: "Dhomë me Pamje Qyteti", floor: "Apartamentet" },
+      { id: "s112", file: "IMG_20251223_134316_00_112.jpg", title: "Apartament — Korridori", floor: "Apartamentet" },
+      { id: "s114", file: "IMG_20251223_134400_00_114.jpg", title: "Saloni me Dritare Panoramike", floor: "Apartamentet" },
+      { id: "s115", file: "IMG_20251223_134430_00_115.jpg", title: "Ballkoni me Pamje", floor: "Apartamentet" },
+
+      // Rooftop
+      { id: "s128", file: "IMG_20251223_135042_00_128.jpg", title: "Çatia — Pamje Panoramike", floor: "Çatia" }
+    ];
+
+    const floorOrder = ["Kati Përdhe", "Kati i 1-rë", "Kati i 2-të", "Eksterieri", "Apartamentet", "Çatia"];
+
+    // ── Hotspot Connections (which scenes connect to which, with floor positions) ──
+    const connections = {
+      // Ground Floor flow
+      "s001": [
+        { to: "s002", pitch: -30, yaw: 0, label: "Holli" },
+      ],
+      "s002": [
+        { to: "s001", pitch: -30, yaw: 180, label: "Hyrja" },
+        { to: "s004", pitch: -30, yaw: 10, label: "Korridori" },
+      ],
+      "s004": [
+        { to: "s002", pitch: -30, yaw: 180, label: "Holli" },
+        { to: "s007", pitch: -30, yaw: 0, label: "Korridori me Xham" },
+        { to: "s013", pitch: 15, yaw: -90, label: "Kati i 1-rë ↑", stairs: true },
+      ],
+      "s007": [
+        { to: "s004", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s009", pitch: -30, yaw: 0, label: "Kryqëzimi" },
+      ],
+      "s009": [
+        { to: "s007", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s010", pitch: -30, yaw: 0, label: "Korridori" },
+        { to: "s011", pitch: -30, yaw: 90, label: "Njësia Komerciale" },
+      ],
+      "s010": [
+        { to: "s009", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s011", pitch: -30, yaw: 45, label: "Njësia" },
+      ],
+      "s011": [
+        { to: "s010", pitch: -30, yaw: 180, label: "Korridori" },
+        { to: "s013", pitch: 10, yaw: 0, label: "Kati i 1-rë ↑", stairs: true },
+      ],
+
+      // 1st Floor
+      "s013": [
+        { to: "s011", pitch: -15, yaw: 180, label: "Kati Përdhe ↓", stairs: true },
+        { to: "s017", pitch: -30, yaw: 0, label: "Dhomë me Dritare" },
+      ],
+      "s017": [
+        { to: "s013", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s020", pitch: -30, yaw: 0, label: "Dhomë Qoshe" },
+      ],
+      "s020": [
+        { to: "s017", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s028", pitch: 10, yaw: 90, label: "Kati i 2-të ↑", stairs: true },
+      ],
+
+      // 2nd Floor
+      "s028": [
+        { to: "s020", pitch: -15, yaw: 180, label: "Kati i 1-rë ↓", stairs: true },
+        { to: "s035", pitch: -30, yaw: 0, label: "Dhomë e Madhe" },
+      ],
+      "s035": [
+        { to: "s028", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s038", pitch: -30, yaw: 0, label: "Shkallët" },
+      ],
+      "s038": [
+        { to: "s035", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s064", pitch: -30, yaw: 0, label: "Jashtë" },
+      ],
+
+      // Exterior
+      "s064": [
+        { to: "s038", pitch: -30, yaw: 180, label: "Brenda" },
+        { to: "s065", pitch: -30, yaw: 45, label: "Tarracë" },
+        { to: "s075", pitch: -30, yaw: -45, label: "Oborri" },
+      ],
+      "s065": [
+        { to: "s064", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s075", pitch: -30, yaw: 0, label: "Oborri" },
+      ],
+      "s075": [
+        { to: "s065", pitch: -30, yaw: 180, label: "Tarracë" },
+        { to: "s080", pitch: 10, yaw: 0, label: "Apartamentet ↑", stairs: true },
+      ],
+
+      // Apartments
+      "s080": [
+        { to: "s075", pitch: -15, yaw: 180, label: "Jashtë ↓", stairs: true },
+        { to: "s082", pitch: -30, yaw: 0, label: "Hyrja e Apt." },
+        { to: "s090", pitch: -30, yaw: -90, label: "Shkallët" },
+      ],
+      "s082": [
+        { to: "s080", pitch: -30, yaw: 180, label: "Korridori" },
+        { to: "s085", pitch: -30, yaw: 0, label: "Saloni" },
+      ],
+      "s085": [
+        { to: "s082", pitch: -30, yaw: 180, label: "Hyrja" },
+        { to: "s095", pitch: -30, yaw: 90, label: "Dhoma e Ndenjës" },
+      ],
+      "s090": [
+        { to: "s080", pitch: -30, yaw: 180, label: "Korridori" },
+        { to: "s092", pitch: -30, yaw: 0, label: "Apartamenti" },
+        { to: "s104", pitch: 15, yaw: 90, label: "Kati Tjetër ↑", stairs: true },
+      ],
+      "s092": [
+        { to: "s090", pitch: -30, yaw: 180, label: "Shkallët" },
+        { to: "s095", pitch: -30, yaw: 0, label: "Brenda" },
+      ],
+      "s095": [
+        { to: "s092", pitch: -30, yaw: 180, label: "Dera" },
+        { to: "s085", pitch: -30, yaw: -90, label: "Saloni" },
+      ],
+      "s104": [
+        { to: "s090", pitch: -15, yaw: 180, label: "Poshtë ↓", stairs: true },
+        { to: "s106", pitch: -30, yaw: 0, label: "Brenda Apt." },
+      ],
+      "s106": [
+        { to: "s104", pitch: -30, yaw: 180, label: "Korridori" },
+        { to: "s110", pitch: -30, yaw: 0, label: "Dhoma" },
+        { to: "s112", pitch: -30, yaw: 90, label: "Korridori" },
+      ],
+      "s110": [
+        { to: "s106", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s114", pitch: -30, yaw: 90, label: "Saloni" },
+      ],
+      "s112": [
+        { to: "s106", pitch: -30, yaw: 180, label: "Mbrapa" },
+        { to: "s114", pitch: -30, yaw: 0, label: "Saloni" },
+      ],
+      "s114": [
+        { to: "s112", pitch: -30, yaw: 180, label: "Korridori" },
+        { to: "s115", pitch: -30, yaw: 0, label: "Ballkoni" },
+      ],
+      "s115": [
+        { to: "s114", pitch: -30, yaw: 180, label: "Brenda" },
+        { to: "s128", pitch: 15, yaw: 90, label: "Çatia ↑", stairs: true },
+      ],
+
+      // Rooftop
+      "s128": [
+        { to: "s115", pitch: -15, yaw: 180, label: "Poshtë ↓", stairs: true },
+      ],
+    };
+
+    // ── Build Pannellum Config ──
+    function buildConfig() {
+      const basePath = "assets/Lezhe/virtual-tour/";
+      const pScenes = {};
+
+      scenes.forEach(function(s) {
+        var hotSpots = [];
+        var conns = connections[s.id] || [];
+
+        conns.forEach(function(c) {
+          hotSpots.push({
+            pitch: c.pitch,
+            yaw: c.yaw,
+            type: "scene",
+            sceneId: c.to,
+            text: c.label,
+            cssClass: "floor-hotspot-wrapper",
+            createTooltipFunc: function(div, args) {
+              div.classList.add('floor-hotspot');
+              if (args.stairs) div.classList.add('stairs-up');
+
+              // Arrow SVG pointing forward
+              div.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>';
+
+              // Label
+              var label = document.createElement('div');
+              label.className = 'floor-hotspot-label';
+              label.textContent = args.label;
+              div.appendChild(label);
+            },
+            createTooltipArgs: { label: c.label, stairs: c.stairs || false }
+          });
+        });
+
+        pScenes[s.id] = {
+          title: s.title,
+          panorama: basePath + s.file,
+          pitch: -5,
+          yaw: 0,
+          hfov: 110,
+          type: "equirectangular",
+          autoLoad: true,
+          hotSpots: hotSpots
+        };
+      });
+
+      return {
+        default: {
+          firstScene: "s001",
+          sceneFadeDuration: 600,
+          autoRotate: -1.5,
+          autoRotateInactivityDelay: 8000,
+          compass: true,
+          showControls: false,
+          mouseZoom: true,
+          draggable: true,
+          keyboardZoom: true,
+          friction: 0.15,
+          minHfov: 50,
+          maxHfov: 120
+        },
+        scenes: pScenes
+      };
+    }
+
+    // ── Build Sidebar ──
+    function buildSidebar() {
+      var nav = document.getElementById('sidebarNav');
+      var html = '';
+
+      floorOrder.forEach(function(floor) {
+        var items = scenes.filter(function(s) { return s.floor === floor; });
+        if (items.length === 0) return;
+        html += '<div class="floor-group"><div class="floor-label">' + floor + '</div>';
+        items.forEach(function(s) {
+          html += '<button class="scene-btn" data-scene="' + s.id + '" onclick="goToScene(\'' + s.id + '\')">' + s.title + '</button>';
+        });
+        html += '</div>';
+      });
+      nav.innerHTML = html;
+    }
+
+    // ── Init ──
+    var viewer;
+    var currentIndex = 0;
+
+    function initTour() {
+      var config = buildConfig();
+      viewer = pannellum.viewer('panorama', config);
+
+      viewer.on('scenechange', function(sceneId) {
+        updateUI(sceneId);
+      });
+
+      buildSidebar();
+      updateUI('s001');
+
+      setTimeout(function() {
+        document.getElementById('loadingScreen').classList.add('hidden');
+      }, 2200);
+    }
+
+    function updateUI(sceneId) {
+      var scene = scenes.find(function(s) { return s.id === sceneId; });
+      if (!scene) return;
+      currentIndex = scenes.indexOf(scene);
+
+      document.getElementById('currentSceneLabel').textContent = scene.title;
+      document.getElementById('currentSceneFloor').textContent = scene.floor;
+      document.getElementById('sceneCounterText').textContent = (currentIndex + 1) + ' / ' + scenes.length;
+
+      document.querySelectorAll('.scene-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.scene === sceneId);
+      });
+
+      var activeBtn = document.querySelector('.scene-btn.active');
+      if (activeBtn) activeBtn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    function goToScene(sceneId) {
+      viewer.loadScene(sceneId);
+      if (window.innerWidth <= 900) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('open');
+      }
+    }
+
+    // Controls
+    document.getElementById('prevScene').addEventListener('click', function() {
+      var prev = (currentIndex - 1 + scenes.length) % scenes.length;
+      viewer.loadScene(scenes[prev].id);
+    });
+    document.getElementById('nextScene').addEventListener('click', function() {
+      var next = (currentIndex + 1) % scenes.length;
+      viewer.loadScene(scenes[next].id);
+    });
+    document.getElementById('btnFullscreen').addEventListener('click', function() {
+      if (!document.fullscreenElement) {
+        document.getElementById('tourWrapper').requestFullscreen().catch(function(){});
+      } else {
+        document.exitFullscreen();
+      }
+    });
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebarOverlay').classList.toggle('open');
+    });
+    document.getElementById('sidebarOverlay').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebarOverlay').classList.remove('open');
+    });
+
+    window.addEventListener('load', initTour);
+  </script>
+</body>
+</html>
