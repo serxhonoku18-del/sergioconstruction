@@ -1,0 +1,9 @@
+{
+  "name": "sergio-construction-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sergio Construction SH.P.K — sergioconstruction.al",
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}

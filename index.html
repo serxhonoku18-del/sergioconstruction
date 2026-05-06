@@ -46,6 +46,29 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="css/landing-v2.css">
 
+  <!-- ============================================================
+       GOOGLE ANALYTICS 4
+       Step 1: Go to https://analytics.google.com → Admin → Create Property
+       Step 2: Get your Measurement ID (looks like G-XXXXXXXXXX)
+       Step 3: Replace G-XXXXXXXXXX below with your real ID. Push.
+       Until you replace it, no analytics calls fire (zero overhead).
+       ============================================================ -->
+  <script>
+    (function () {
+      var GA_ID = 'G-XXXXXXXXXX'; // ← replace this
+      if (!GA_ID || GA_ID === 'G-XXXXXXXXXX') return;
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+      window.gtag = gtag;
+    })();
+  </script>
+
   <!-- Preload hero poster (rendered before video starts) -->
   <link rel="preload" as="image" href="assets/Kamez/logos/hf_20260327_134918_d1fc0f85-80da-4cd5-8338-97adcd07ea03.jpg">
 

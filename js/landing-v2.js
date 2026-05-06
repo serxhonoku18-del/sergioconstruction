@@ -99,34 +99,44 @@
     }
   }
 
-  // ---------- Contact form → WhatsApp ----------
+  // ---------- Contact form → email (Resend) + WhatsApp ----------
   const form = document.getElementById('contactForm');
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const data = new FormData(form);
-      const name = (data.get('name') || '').toString().trim();
-      const phone = (data.get('phone') || '').toString().trim();
-      const email = (data.get('email') || '').toString().trim();
-      const city = (data.get('city') || '').toString().trim();
-      const msg  = (data.get('message') || '').toString().trim();
+      const payload = {
+        name:    (data.get('name')    || '').toString().trim(),
+        phone:   (data.get('phone')   || '').toString().trim(),
+        email:   (data.get('email')   || '').toString().trim(),
+        city:    (data.get('city')    || '').toString().trim(),
+        message: (data.get('message') || '').toString().trim(),
+      };
 
+      // 1. Send email to Sergio's inbox via /api/contact (fire-and-forget,
+      //    silent fail if Resend isn't configured yet).
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(() => {});
+
+      // 2. Open WhatsApp with the message pre-filled.
       let body = `Përshëndetje! Jam i interesuar për një konsultë.\n\n`;
-      body += `Emri: ${name}\n`;
-      if (phone) body += `Tel: ${phone}\n`;
-      if (email) body += `Email: ${email}\n`;
-      if (city)  body += `Qyteti i interesit: ${city}\n`;
-      if (msg)   body += `\nMesazhi: ${msg}\n`;
+      body += `Emri: ${payload.name}\n`;
+      if (payload.phone)   body += `Tel: ${payload.phone}\n`;
+      if (payload.email)   body += `Email: ${payload.email}\n`;
+      if (payload.city)    body += `Qyteti i interesit: ${payload.city}\n`;
+      if (payload.message) body += `\nMesazhi: ${payload.message}\n`;
       body += `\n— Nga sergioconstruction.al`;
-
-      const url = `https://wa.me/355696900727?text=${encodeURIComponent(body)}`;
 
       const btn = form.querySelector('button[type="submit"]');
       const original = btn.textContent;
       btn.disabled = true;
       btn.textContent = 'Duke u dërguar…';
 
-      window.open(url, '_blank', 'noopener,noreferrer');
+      window.open(`https://wa.me/355696900727?text=${encodeURIComponent(body)}`,
+                  '_blank', 'noopener,noreferrer');
 
       setTimeout(() => {
         btn.textContent = 'U dërgua ✓';
