@@ -1,0 +1,22 @@
+# Local Claude Code preview config
+.claude/
+
+# Backups / archives
+*.zip
+website sergio.zip
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Build artifacts (none yet, but reserved)
+node_modules/
+dist/
+.cache/

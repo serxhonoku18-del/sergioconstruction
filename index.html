@@ -2,152 +2,232 @@
 <html lang="sq">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sergio Construction SH.P.K | Ndërtojmë me Cilësi</title>
-  <meta name="description" content="Sergio Construction SH.P.K — Apartamente dhe hapësira komerciale luksoze në Kamëz, Shëngjin, Sarandë dhe Lezhë.">
-  <link rel="stylesheet" href="css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0c">
+
+  <title>Sergio Construction — Apartamente Luksoze në Kamëz, Shëngjin, Sarandë & Lezhë</title>
+  <meta name="description" content="Apartamente moderne në katër qytetet kryesore të Shqipërisë. 15+ vite eksperiencë, 200+ familje të kënaqura, dorëzim çelësa në dorë.">
+
+  <!-- Geo (local SEO) -->
+  <meta name="geo.region" content="AL">
+  <meta name="geo.placename" content="Kamëz, Shqipëri">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://sergioconstruction.al/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sq_AL">
+  <meta property="og:site_name" content="Sergio Construction">
+  <meta property="og:title" content="Sergio Construction — Apartamente Luksoze në Shqipëri">
+  <meta property="og:description" content="Apartamente moderne në Kamëz, Shëngjin, Sarandë dhe Lezhë. 15+ vite eksperiencë.">
+  <meta property="og:url" content="https://sergioconstruction.al/">
+  <!-- TODO: Replace with a 1200×630 JPG of your best project (under 300KB) -->
+  <meta property="og:image" content="https://sergioconstruction.al/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sergio Construction — Apartamente Luksoze në Shqipëri">
+  <meta name="twitter:description" content="Apartamente moderne në Kamëz, Shëngjin, Sarandë dhe Lezhë.">
+
+  <!-- Favicons (TODO: generate from realfavicongenerator.net) -->
+  <link rel="icon" type="image/svg+xml" href="assets/logos/favicon.svg">
+  <link rel="alternate icon" href="assets/logos/favicon.ico">
+  <link rel="apple-touch-icon" href="assets/logos/apple-touch-icon.png">
+
+  <!-- Fonts: Fraunces (display, variable) + Inter (sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body class="landing-page">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600&display=swap">
 
-  <!-- LANDING NAV -->
-  <nav class="landing-nav" id="landingNav">
-    <div class="nav-container">
-      <a href="index.html" class="nav-logo">
-        <img src="assets/logos/hf_20260326_001003_f88b4c29-5dec-41cb-8301-e37ae12d23cb (1).jpg" alt="Sergio Construction SH.P.K" class="logo-img logo-wide">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/landing-v2.css">
+
+  <!-- Preload hero poster (rendered before video starts) -->
+  <link rel="preload" as="image" href="assets/Kamez/logos/hf_20260327_134918_d1fc0f85-80da-4cd5-8338-97adcd07ea03.jpg">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "GeneralContractor",
+    "name": "Sergio Construction SH.P.K",
+    "description": "Kompani ndërtimi e specializuar në apartamente luksoze dhe hapësira komerciale në Shqipëri.",
+    "url": "https://sergioconstruction.al",
+    "logo": "https://sergioconstruction.al/assets/logos/logo.png",
+    "telephone": ["+355696900727", "+355676008686", "+355689030740"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kamëz",
+      "addressRegion": "Tirana",
+      "addressCountry": "AL"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Kamëz" },
+      { "@type": "City", "name": "Shëngjin" },
+      { "@type": "City", "name": "Sarandë" },
+      { "@type": "City", "name": "Lezhë" }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "200"
+    },
+    "sameAs": ["https://www.instagram.com/sergioconstructionshpk/"]
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- ============== NAV ============== -->
+  <nav class="nav" id="nav" aria-label="Navigimi kryesor">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand" aria-label="Sergio Construction — Faqja kryesore">
+        <img src="assets/logos/hf_20260326_001003_f88b4c29-5dec-41cb-8301-e37ae12d23cb (1).jpg" alt="Sergio Construction" width="180" height="44">
       </a>
-      <button class="nav-toggle" id="navToggle" aria-label="Hap menunë">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-menu" id="navMenu">
+
+      <ul class="nav-links" id="navLinks">
         <li><a href="#cities">Projektet</a></li>
-        <li><a href="#about-landing">Rreth Nesh</a></li>
-        <li><a href="#contact-landing" class="nav-cta">Na Kontaktoni</a></li>
+        <li><a href="#why">Pse Ne</a></li>
+        <li><a href="#about">Rreth Nesh</a></li>
+        <li><a href="#testimonials">Dëshmi</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+        <li class="m-only"><a href="tel:+355696900727" class="nav-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+355 69 690 0727</a></li>
       </ul>
+
+      <div class="nav-actions">
+        <a href="tel:+355696900727" class="nav-phone" aria-label="Telefononi tani">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+355 69 690 0727</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Hap menunë" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </nav>
 
-  <!-- HERO WITH VIDEO BACKGROUND -->
-  <section class="landing-hero">
-    <div class="video-bg-wrap">
-      <video class="video-bg" autoplay muted loop playsinline preload="metadata">
+  <!-- ============== HERO ============== -->
+  <section class="hero">
+    <div class="hero-media" aria-hidden="true">
+      <!-- Poster shows instantly; video loads behind it -->
+      <img class="hero-poster" src="assets/Kamez/logos/hf_20260327_134918_d1fc0f85-80da-4cd5-8338-97adcd07ea03.jpg" alt="" width="1920" height="1080" fetchpriority="high">
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/Kamez/logos/hf_20260327_134918_d1fc0f85-80da-4cd5-8338-97adcd07ea03.jpg">
         <source src="assets/logos/hf_20260217_230101_a8584ca5-4b9c-47fd-ae11-83b2c8206773 (1).mp4" type="video/mp4">
       </video>
-      <div class="video-bg-overlay"></div>
     </div>
-    <div class="landing-hero-content">
-      <div class="landing-logo-wrap">
-        <img src="assets/logos/hf_20260326_001003_f88b4c29-5dec-41cb-8301-e37ae12d23cb (1).jpg" alt="Sergio Construction" class="landing-logo-wide">
+
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Kamëz · Shëngjin · Sarandë · Lezhë</p>
+      <h1>Ndërtojmë shtëpinë <em>e ëndrrave tuaja</em> në katër qytete</h1>
+      <p class="hero-sub">Apartamente luksoze dhe investime të sigurta — me cilësi europiane, dorëzim në afat dhe çelësa në dorë.</p>
+      <div class="hero-actions">
+        <a href="#cities" class="btn btn-primary">Shih Apartamentet</a>
+        <a href="https://wa.me/355696900727?text=P%C3%ABrsh%C3%ABndetje!%20Do%20doja%20t%C3%AB%20rezervoj%20nj%C3%AB%20vizit%C3%AB." class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.613.613l4.458-1.495A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.607-.798-6.375-2.144l-.446-.344-3.09 1.036 1.036-3.09-.344-.446A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Rezervo Vizitë
+        </a>
       </div>
-      <p class="landing-pre-title">SH.P.K</p>
-      <h1 class="landing-title">Sergio Construction</h1>
-      <div class="landing-line"></div>
-      <p class="landing-tagline">Ndërtojmë të Ardhmen Tuaj</p>
-      <p class="landing-desc">Apartamente luksoze, hapësira komerciale dhe investime të sigurta në katër qytetet kryesore të Shqipërisë</p>
-      <a href="#cities" class="btn btn-primary landing-cta">Eksploroni Projektet</a>
     </div>
-    <div class="landing-scroll-indicator">
-      <span>Zbrit</span>
-      <div class="scroll-arrow"></div>
+
+    <div class="hero-strip">
+      <div class="hero-strip-inner">
+        <div class="hero-strip-item"><div class="num"><span data-count="15" data-suffix="+">15+</span></div><div class="lbl">Vite Eksperiencë</div></div>
+        <div class="hero-strip-item"><div class="num"><span data-count="200" data-suffix="+">200+</span></div><div class="lbl">Apartamente</div></div>
+        <div class="hero-strip-item"><div class="num">4</div><div class="lbl">Qytete</div></div>
+        <div class="hero-strip-item"><div class="num">100%</div><div class="lbl">Çelësa në Dorë</div></div>
+      </div>
     </div>
   </section>
 
-  <!-- CITY SELECTION -->
-  <section class="cities-section" id="cities">
+  <!-- ============== CITIES ============== -->
+  <section class="section cities" id="cities">
     <div class="container">
-      <p class="section-pre-title">Zgjidhni Destinacionin</p>
-      <h2 class="section-title">Projektet Tona</h2>
-      <p class="section-subtitle">Katër qytete, një standard cilësie</p>
-      <div class="section-line"></div>
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">Projektet Tona</p>
+        <h2>Katër qytete, një standard cilësie</h2>
+        <p class="muted">Nga Kamëza urbane deri tek bregdetare — gjeni shtëpinë që ju përshtatet.</p>
+        <div class="divider"></div>
+      </header>
 
       <div class="city-grid">
 
         <!-- KAMËZ -->
-        <a href="kamez.html" class="city-card">
-          <div class="city-card-bg">
-            <img src="assets/Kamez/logos/hf_20260327_134918_d1fc0f85-80da-4cd5-8338-97adcd07ea03.jpg" alt="Kamëz">
-          </div>
-          <div class="city-card-overlay"></div>
-          <div class="city-card-content">
-            <span class="city-label">Projekte Aktive</span>
-            <h3 class="city-name">Kamëz</h3>
+        <a href="kamez.html" class="city-card" data-reveal>
+          <img src="assets/Kamez/logos/hf_20260327_134918_d1fc0f85-80da-4cd5-8338-97adcd07ea03.jpg" alt="Cozy Corner Residence — Kamëz" loading="lazy" decoding="async" width="800" height="600">
+          <div class="city-content">
+            <span class="city-tag">Aktiv tani</span>
+            <h3>Kamëz</h3>
             <p class="city-project">Cozy Corner Residence</p>
-            <div class="city-details">
-              <span>70+ Apartamente</span>
-              <span>9 Kate</span>
-              <span>2 Seksione</span>
+            <div class="city-meta">
+              <span>70+ apartamente</span>
+              <span>9 kate</span>
+              <span>2 seksione</span>
             </div>
-            <div class="city-cta">
-              <span>Eksploroni</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="city-foot">
+              <div class="city-price"><small>Çmime nga</small><b>€650/m²</b></div>
+              <span class="city-arrow">Eksploro <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
           </div>
         </a>
 
         <!-- SHËNGJIN -->
-        <a href="shengjin.html" class="city-card">
-          <div class="city-card-bg">
-            <img src="assets/Shengjin/logos/hf_20260327_134700_b7ce6929-04f2-49f0-ad79-cef5e9102855.jpg" alt="Shëngjin">
-          </div>
-          <div class="city-card-overlay"></div>
-          <div class="city-card-content">
-            <span class="city-label">Projekt I Përfunduar</span>
-            <h3 class="city-name">Shëngjin</h3>
-            <p class="city-project">Projekte Bregdetare</p>
-            <div class="city-details">
-              <span>Apartamente</span>
-              <span>Vila</span>
-              <span>Resort</span>
+        <a href="shengjin.html" class="city-card" data-reveal>
+          <img src="assets/Shengjin/logos/hf_20260327_134700_b7ce6929-04f2-49f0-ad79-cef5e9102855.jpg" alt="Apartamente bregdetare në Shëngjin" loading="lazy" decoding="async" width="800" height="600">
+          <div class="city-content">
+            <span class="city-tag">I përfunduar</span>
+            <h3>Shëngjin</h3>
+            <p class="city-project">Bregdetar Premium</p>
+            <div class="city-meta">
+              <span>50+ apartamente</span>
+              <span>200m nga deti</span>
+              <span>3 projekte</span>
             </div>
-            <div class="city-cta">
-              <span>Eksploroni</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="city-foot">
+              <div class="city-price"><small>Investim turistik</small><b>Pyet për çmimin</b></div>
+              <span class="city-arrow">Eksploro <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
           </div>
         </a>
 
         <!-- SARANDË -->
-        <a href="sarande.html" class="city-card">
-          <div class="city-card-bg">
-            <img src="assets/Sarande/logos/hf_20260327_132625_bd32e65f-9bf5-432f-9e77-2fee235926d1.jpg" alt="Sarandë">
-          </div>
-          <div class="city-card-overlay"></div>
-          <div class="city-card-content">
-            <span class="city-label">Projekt I Përfunduar</span>
-            <h3 class="city-name">Sarandë</h3>
-            <p class="city-project">Projekte Rivierë</p>
-            <div class="city-details">
-              <span>Apartamente</span>
-              <span>Komerciale</span>
-              <span>Turizëm</span>
+        <a href="sarande.html" class="city-card" data-reveal>
+          <img src="assets/Sarande/logos/hf_20260327_132625_bd32e65f-9bf5-432f-9e77-2fee235926d1.jpg" alt="Apartamente luksoze në Sarandë" loading="lazy" decoding="async" width="800" height="600">
+          <div class="city-content">
+            <span class="city-tag">I përfunduar</span>
+            <h3>Sarandë</h3>
+            <p class="city-project">Riviera Shqiptare</p>
+            <div class="city-meta">
+              <span>35+ apartamente</span>
+              <span>150m nga plazhi</span>
+              <span>2 projekte</span>
             </div>
-            <div class="city-cta">
-              <span>Eksploroni</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="city-foot">
+              <div class="city-price"><small>Pamje nga deti</small><b>Pyet për çmimin</b></div>
+              <span class="city-arrow">Eksploro <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
           </div>
         </a>
 
         <!-- LEZHË -->
-        <a href="lezhe.html" class="city-card">
-          <div class="city-card-bg">
-            <img src="assets/Lezhe/logos/hf_20260327_134052_257d516e-6cf3-43ff-a3ae-1dba31896ee1.jpg" alt="Lezhë">
-          </div>
-          <div class="city-card-overlay"></div>
-          <div class="city-card-content">
-            <span class="city-label">Projekt I Përfunduar</span>
-            <h3 class="city-name">Lezhë</h3>
-            <p class="city-project">Projekte Urbane</p>
-            <div class="city-details">
-              <span>Apartamente</span>
-              <span>Komerciale</span>
-              <span>Rezidenca</span>
+        <a href="lezhe.html" class="city-card" data-reveal>
+          <img src="assets/Lezhe/logos/hf_20260327_134052_257d516e-6cf3-43ff-a3ae-1dba31896ee1.jpg" alt="Apartamente moderne në Lezhë" loading="lazy" decoding="async" width="800" height="600">
+          <div class="city-content">
+            <span class="city-tag">I përfunduar</span>
+            <h3>Lezhë</h3>
+            <p class="city-project">Urban Modern</p>
+            <div class="city-meta">
+              <span>40+ apartamente</span>
+              <span>8 kate</span>
+              <span>2 projekte</span>
             </div>
-            <div class="city-cta">
-              <span>Eksploroni</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <div class="city-foot">
+              <div class="city-price"><small>Qendër urbane</small><b>Pyet për çmimin</b></div>
+              <span class="city-arrow">Eksploro <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
           </div>
         </a>
@@ -156,69 +236,249 @@
     </div>
   </section>
 
-  <!-- ABOUT LANDING -->
-  <section class="section about-landing" id="about-landing">
+  <!-- ============== WHY US ============== -->
+  <section class="section why" id="why">
     <div class="container">
-      <p class="section-pre-title">Kush Jemi</p>
-      <h2 class="section-title">Rreth Sergio Construction</h2>
-      <p class="section-subtitle">Cilësia që flet vetë</p>
-      <div class="section-line"></div>
-      <div class="about-landing-content">
-        <p>Sergio Construction SH.P.K është një kompani ndërtimi e specializuar në zhvillimin e projekteve rezidenciale dhe komerciale në të gjithë Shqipërinë. Me projekte aktive në Kamëz, Shëngjin, Sarandë dhe Lezhë, ne ofrojmë apartamente moderne, njësi shërbimi dhe mundësi investimi të sigurta.</p>
-        <div class="landing-stats">
-          <div class="stat">
-            <span class="stat-number">4</span>
-            <span class="stat-label">Qytete</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">70+</span>
-            <span class="stat-label">Apartamente</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">15+</span>
-            <span class="stat-label">Vite Eksperiencë</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number">200+</span>
-            <span class="stat-label">Klientë</span>
-          </div>
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">Pse Sergio Construction</p>
+        <h2>Çfarë na dallon</h2>
+        <p class="muted">Katër arsye që 200+ familje na zgjodhën neve.</p>
+        <div class="divider"></div>
+      </header>
+
+      <div class="why-grid">
+        <article class="why-card" data-reveal>
+          <div class="why-num">01</div>
+          <h3>Cilësi e certifikuar</h3>
+          <p>Materiale europiane, kontrolle në çdo fazë. Standardet tona janë mbi minimumin ligjor.</p>
+        </article>
+        <article class="why-card" data-reveal>
+          <div class="why-num">02</div>
+          <h3>15+ vite eksperiencë</h3>
+          <p>Mbi një dekadë në treg, me projekte aktive dhe të dorëzuara në katër qytete.</p>
+        </article>
+        <article class="why-card" data-reveal>
+          <div class="why-num">03</div>
+          <h3>Dorëzim në afat</h3>
+          <p>Çdo projekt përfundohet sipas kontratës — me dokumentacion të plotë, çelësa në dorë.</p>
+        </article>
+        <article class="why-card" data-reveal>
+          <div class="why-num">04</div>
+          <h3>Mbështetje pas blerjes</h3>
+          <p>Garanci ndërtimi dhe mbështetje teknike për çdo apartament që dorëzojmë.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== ABOUT ============== -->
+  <section class="section about" id="about">
+    <div class="container">
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">Rreth Nesh</p>
+        <h2>Ndërtojmë me pasion. Dorëzojmë me krenari.</h2>
+        <div class="divider"></div>
+      </header>
+
+      <div class="about-inner" data-reveal>
+        <p>Sergio Construction SH.P.K është kompani ndërtimi e themeluar me misionin për të sjellë standarde të reja cilësie në tregun e pronave në Shqipëri. Me projekte aktive në Kamëz dhe projekte të përfunduara në Shëngjin, Sarandë dhe Lezhë, kemi ndërtuar një reputacion të fortë mbi besimin, transparencën dhe cilësinë.</p>
+        <p>Klientët tanë nuk blejnë thjesht një apartament — ata investojnë në siguri, komoditet dhe një jetë më të mirë.</p>
+
+        <div class="about-stats">
+          <div class="about-stat"><div class="num"><span data-count="200" data-suffix="+">200+</span></div><div class="lbl">Apartamente të Ndërtuara</div></div>
+          <div class="about-stat"><div class="num">4</div><div class="lbl">Qytete të Mbuluara</div></div>
+          <div class="about-stat"><div class="num"><span data-count="15" data-suffix="+">15+</span></div><div class="lbl">Vite Eksperiencë</div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT LANDING -->
-  <section class="section contact-landing" id="contact-landing">
+  <!-- ============== TESTIMONIALS ============== -->
+  <section class="section testimonials" id="testimonials">
     <div class="container">
-      <p class="section-pre-title">Kontakt</p>
-      <h2 class="section-title">Na Kontaktoni</h2>
-      <p class="section-subtitle">Jeni të interesuar? Na telefononi ose na shkruani.</p>
-      <div class="section-line"></div>
-      <div class="contact-landing-grid">
-        <div class="contact-landing-item">
-          <h4>Telefon</h4>
-          <a href="tel:+355696900727">+355 69 690 0727</a>
-          <a href="tel:+355676008686">+355 67 600 8686</a>
-          <a href="tel:+355689030740">+355 68 903 0740</a>
-        </div>
-        <div class="contact-landing-item">
-          <h4>Na Ndiqni</h4>
-          <a href="https://www.instagram.com/sergioconstructionshpk/" target="_blank">@sergioconstructionshpk</a>
-        </div>
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">Dëshmi</p>
+        <h2>Klientët flasin për ne</h2>
+        <div class="divider"></div>
+      </header>
+
+      <div class="t-grid">
+        <article class="t-card" data-reveal>
+          <div class="t-stars" aria-label="5 yje">★★★★★</div>
+          <p class="t-quote">Cilësia e ndërtimit, materialet dhe vëmendja ndaj detajeve ishin mbi pritshmëritë tona. Faleminderit për shtëpinë e re!</p>
+          <div class="t-author">
+            <div class="t-avatar" aria-hidden="true">FH</div>
+            <div class="t-meta"><strong>Familja Hoxha</strong><span>Cozy Corner · Kamëz</span></div>
+          </div>
+        </article>
+
+        <article class="t-card" data-reveal>
+          <div class="t-stars" aria-label="5 yje">★★★★★</div>
+          <p class="t-quote">Projekti u dorëzua në afat, cilësia ishte e shkëlqyer dhe ekipi ishte gjithmonë i gatshëm. Rekomandoj pa rezerva.</p>
+          <div class="t-author">
+            <div class="t-avatar" aria-hidden="true">AM</div>
+            <div class="t-meta"><strong>Arben &amp; Elona M.</strong><span>Bregdetar · Shëngjin</span></div>
+          </div>
+        </article>
+
+        <article class="t-card" data-reveal>
+          <div class="t-stars" aria-label="5 yje">★★★★★</div>
+          <p class="t-quote">Profesionalizëm i lartë nga fillimi deri në fund. Pa vonesa, pa surpriza. Bëjnë atë që thonë.</p>
+          <div class="t-author">
+            <div class="t-avatar" aria-hidden="true">DK</div>
+            <div class="t-meta"><strong>Dritan K.</strong><span>Riviera · Sarandë</span></div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- ============== CONTACT ============== -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-info" data-reveal>
+          <p class="eyebrow" style="display:inline-block;margin-bottom:var(--s-3)">Kontakt</p>
+          <h2>Rezervo një konsultë falas.</h2>
+          <p>Plotëso formularin ose na shkruaj direkt në WhatsApp. Ju përgjigjemi brenda 24 orëve, çdo ditë.</p>
+
+          <div class="contact-list">
+            <div class="contact-row">
+              <div class="ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div>
+                <h4>Telefon</h4>
+                <div class="vals">
+                  <a href="tel:+355696900727">+355 69 690 0727</a>
+                  <a href="tel:+355676008686">+355 67 600 8686</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-row">
+              <div class="ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.613.613l4.458-1.495A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+              </div>
+              <div>
+                <h4>WhatsApp</h4>
+                <a href="https://wa.me/355696900727" target="_blank" rel="noopener noreferrer">+355 69 690 0727</a>
+              </div>
+            </div>
+
+            <div class="contact-row">
+              <div class="ico" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              </div>
+              <div>
+                <h4>Instagram</h4>
+                <a href="https://www.instagram.com/sergioconstructionshpk/" target="_blank" rel="noopener noreferrer">@sergioconstructionshpk</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form class="form-card" id="contactForm" data-reveal novalidate>
+          <h3>Më kontaktoni mua</h3>
+          <p>Plotëso në më pak se 30 sekonda — ju përgjigjemi në WhatsApp.</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="cf-name">Emri</label>
+              <input id="cf-name" name="name" type="text" required autocomplete="name" placeholder="Emri juaj">
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="cf-phone">Telefoni</label>
+                <input id="cf-phone" name="phone" type="tel" required autocomplete="tel" placeholder="+355 ...">
+              </div>
+              <div class="field">
+                <label for="cf-email">Email <span style="color:var(--ink-soft);text-transform:none;letter-spacing:0">(opsionale)</span></label>
+                <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="ju@example.com">
+              </div>
+            </div>
+            <div class="field">
+              <label for="cf-city">Qyteti i interesit</label>
+              <select id="cf-city" name="city">
+                <option value="">— Zgjidh një qytet —</option>
+                <option>Kamëz</option>
+                <option>Shëngjin</option>
+                <option>Sarandë</option>
+                <option>Lezhë</option>
+                <option>Pa preferencë</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cf-msg">Mesazhi</label>
+              <textarea id="cf-msg" name="message" placeholder="Numri i dhomave, buxheti, afati i blerjes..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Dërgo në WhatsApp</button>
+            <p class="form-fineprint">Të dhënat tuaja nuk shpërndahen. Përgjigje brenda 24 orëve.</p>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== FOOTER ============== -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-minimal">
-        <img src="assets/logos/hf_20260326_001003_f88b4c29-5dec-41cb-8301-e37ae12d23cb (1).jpg" alt="Sergio Construction" class="footer-logo footer-logo-wide">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="assets/logos/hf_20260326_001003_f88b4c29-5dec-41cb-8301-e37ae12d23cb (1).jpg" alt="Sergio Construction" width="180" height="48">
+          <p>Apartamente luksoze dhe hapësira komerciale në Kamëz, Shëngjin, Sarandë dhe Lezhë.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Projektet</h4>
+          <a href="kamez.html">Kamëz</a>
+          <a href="shengjin.html">Shëngjin</a>
+          <a href="sarande.html">Sarandë</a>
+          <a href="lezhe.html">Lezhë</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kompania</h4>
+          <a href="#about">Rreth Nesh</a>
+          <a href="#why">Pse Ne</a>
+          <a href="#testimonials">Dëshmi</a>
+          <a href="#contact">Kontakt</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <a href="tel:+355696900727">+355 69 690 0727</a>
+          <a href="tel:+355676008686">+355 67 600 8686</a>
+          <a href="https://wa.me/355696900727" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://www.instagram.com/sergioconstructionshpk/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
         <p>&copy; 2026 Sergio Construction SH.P.K. Të gjitha të drejtat e rezervuara.</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/sergioconstructionshpk/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a>
+          <a href="https://wa.me/355696900727" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WhatsApp</a>
+        </div>
       </div>
     </div>
   </footer>
 
-  <script src="js/landing.js"></script>
+  <!-- Floating WhatsApp (desktop) -->
+  <a href="https://wa.me/355696900727?text=P%C3%ABrsh%C3%ABndetje!" class="float-wa" target="_blank" rel="noopener noreferrer" aria-label="Na shkruani në WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.613.613l4.458-1.495A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+  </a>
+
+  <!-- Sticky mobile CTA -->
+  <div class="mobile-cta" role="region" aria-label="Veprime të shpejta">
+    <a class="m-call" href="tel:+355696900727">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      Telefono
+    </a>
+    <a class="m-wa" href="https://wa.me/355696900727" target="_blank" rel="noopener noreferrer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.613.613l4.458-1.495A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+
+  <script src="js/landing-v2.js" defer></script>
 </body>
 </html>
